@@ -5,7 +5,7 @@ import Header from './components/Header/Header';
 import Quote from './components/Quote/Quote';
 import Footer from './components/Footer/Footer';
 
-import background from "./assets/unnamed.jpg";
+import background from "./assets/background.jpg";
 
 function App() {
 

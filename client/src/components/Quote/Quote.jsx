@@ -4,16 +4,36 @@ import React, {useState, useEffect} from "react";
 import "./Quote.css"
 
 const Quote = () => {
-    const quotes = ["Someone in your life needs to hear that they matter. That they are loved. That they have a future. Be the one to tell them.", "Friend."]
+    const [quotes, setQuotes] = useState([]);
+    const [sQuote, setSQuote] = useState("")
+
+    // Fetch quote list
+    useEffect(() => {
+        fetch("https://type.fit/api/quotes")
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            setQuotes(data);
+        }).catch(error => console.error(error));;
+    }, [])
+    useEffect(() => {
+        // Set quote random initally
+        setSQuote(quotes.length !== 0 ? quotes[Math.floor(Math.random()*quotes.length)].text : "Click me for a quote")
+    },[])
+
+    const onResetQuote = () => {
+        // Get new quote every click
+        setSQuote(quotes.length !== 0 ? quotes[Math.floor(Math.random()*quotes.length)].text : "")
+    }
+    
 
     return (
-        <div className="quote">
+        <div onClick={onResetQuote} className="quote">
             <h2>Quotes</h2>
-            <li>
-                {quotes.map(quote => {
-                    return <ul className="quote-content">{quote}</ul>
-                })}
-            </li>
+            <ul>
+                <li key="QCs" className="quote-content">{sQuote}</li>
+            </ul>
         </div>
     );
 }
